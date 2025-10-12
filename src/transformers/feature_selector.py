@@ -8,7 +8,7 @@ from sklearn.feature_selection import mutual_info_classif, SelectKBest, f_classi
 
 def correlation_selection(X, y, feature_names):
     # combined_df = pd.concat([X, y], axis=1)
-    combined_df = X.clone()
+    combined_df = X.copy()
     combined_df['class'] = y
     corr_matrix = combined_df.corr(method='pearson')
     results = {}
