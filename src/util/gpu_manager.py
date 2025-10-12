@@ -5,7 +5,7 @@ import torch
 class GPUManager:
     def device(self):
         if torch.cuda.is_available():
-            return torch.cuda.get_device_name(0)
+            return 'cuda:0'
         else:
             return 'cpu'
 
