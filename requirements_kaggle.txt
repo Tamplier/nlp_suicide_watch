@@ -4,3 +4,4 @@ emot
 hunspell
 pyspellchecker
 invoke
+symspellpy
