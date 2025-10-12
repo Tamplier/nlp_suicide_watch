@@ -9,7 +9,8 @@ def retrain_model(c, skip_preprocessing=False, sample_n=None, opt_trials=30):
     ]
     if skip_preprocessing:
         cmd.append('--skip_preprocessing')
-    cmd.append(f'--sample_n={sample_n}')
+    if sample_n:
+        cmd.append(f'--sample_n={sample_n}')
     cmd.append(f'--optimization_trials={opt_trials}')
     command_str = ' '.join(cmd)
 
