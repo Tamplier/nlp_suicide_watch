@@ -13,12 +13,12 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.13'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install python3.13-dev
+        sudo apt-get install python3.12-dev
         sudo apt-get install libhunspell-dev
         sudo apt-get install hunspell-en-us
         python -m pip install --upgrade pip
