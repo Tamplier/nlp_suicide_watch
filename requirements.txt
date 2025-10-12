@@ -1,0 +1,16 @@
+numpy>=2.0
+scikit-learn>=1.7
+pytest>=8.0
+hunspell>=0.5
+pyspellchecker>=0.8
+spacy>=3.8
+symspellpy>=6.9
+torch>=2.8
+urlextract>=1.9
+emot>=3.1
+iterative-stratification>=0.1.9
+sentence_transformers>=5.1
+langchain>=0.3
+xgboost>=3.0
+optuna>=4.5
+invoke>=2.2
