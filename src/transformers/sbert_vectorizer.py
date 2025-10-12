@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class SbertVectorizer(BaseEstimator, TransformerMixin, GPUManager):
     def __init__(self, model_name='sentence-transformers/all-mpnet-base-v2'):
         self.model_name = model_name
-        self.model = SentenceTransformer(self.model_name, self.device())
+        self.model = SentenceTransformer(self.model_name, device=self.device())
         self.tokenizer = self.model.tokenizer
         self.chunk_token_size = self.model.max_seq_length - 50
         logger.info('Max seq length: %i', self.chunk_token_size)
