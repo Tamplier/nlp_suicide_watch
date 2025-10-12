@@ -57,7 +57,7 @@ def random_forest_importance(X, y, feature_names):
 
 def k_best_selection(X, y, _feature_names):
     results = {}
-    selector = SelectKBest(score_func=f_classif, k=100)
+    selector = SelectKBest(score_func=f_classif, k='all')
     selector.fit(X, y)
     scores = selector.scores_
     mask = selector.get_support()
