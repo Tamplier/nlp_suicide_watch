@@ -109,12 +109,12 @@ if args.optimization_trials > 0:
     best_params = study.best_params
 else:
     best_params = {
-        'n_estimators': 1100,
+        'n_estimators': 1000,
         'max_depth': 7,
-        'learning_rate': 0.11845310258701165,
-        'subsample': 0.8577362914728137,
-        'reg_lambda': 4.780328173176433,
-        'reg_alpha': 0.22787849319324718
+        'learning_rate': 0.09834664138374917,
+        'subsample': 0.5786264590243144,
+        'reg_lambda': 0.04831147344367189,
+        'reg_alpha': 2.141586285223651
     }
 
 best_params['use_label_encoder'] = False
