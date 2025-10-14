@@ -6,7 +6,6 @@ hunspell>=0.5
 pyspellchecker>=0.8
 spacy>=3.8
 symspellpy>=6.9
-torch>=2.8
 urlextract>=1.9
 emot>=3.1
 iterative-stratification>=0.1.9

@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12-slim as builder
 
 ENV PYTHONUNBUFFERED=1
 
@@ -9,7 +9,24 @@ WORKDIR /app
 
 COPY requirements.txt .
 
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
+
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PATH="/opt/venv/bin:$PATH"
+
+RUN apt-get update && apt-get install -y libhunspell-dev hunspell-en-us
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY --from=builder /opt/venv /opt/venv
+
 RUN python -m spacy download en_core_web_sm
 
 COPY . .
