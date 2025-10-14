@@ -3,7 +3,8 @@ from contextlib import contextmanager
 import torch
 
 class GPUManager:
-    def device(self):
+    @classmethod
+    def device(cls):
         if torch.cuda.is_available():
             return 'cuda:0'
         else:

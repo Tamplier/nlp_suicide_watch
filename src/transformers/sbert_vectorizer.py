@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class SbertVectorizer(BaseEstimator, TransformerMixin, GPUManager):
     def __init__(self, model_name='sentence-transformers/all-mpnet-base-v2'):
         self.model_name = model_name
-        self.model = SentenceTransformer(self.model_name, device=self.device())
+        self.model = SentenceTransformer(self.model_name, device=GPUManager.device())
         self.tokenizer = self.model.tokenizer
         self.chunk_token_size = self.model.max_seq_length - 50
         logger.info('Max seq length: %i', self.chunk_token_size)
@@ -62,7 +62,7 @@ class SbertVectorizer(BaseEstimator, TransformerMixin, GPUManager):
         logger.info('Start SBERT transform')
         X_encoded = []
         X = X if isinstance(X, list) else list(X)
-        with GPUManager.gpu_routine(lambda: self.model.to(self.device()), self.model.cpu):
+        with GPUManager.gpu_routine(lambda: self.model.to(GPUManager.device()), self.model.cpu):
             for x in X:
                 chunks = self._chunk_text_by_tokens(x)
                 if not chunks:
@@ -72,7 +72,7 @@ class SbertVectorizer(BaseEstimator, TransformerMixin, GPUManager):
 
                 chunk_embeddings = self.model.encode(
                     chunks,
-                    device=self.device(),
+                    device=GPUManager.device(),
                     batch_size=512,
                     convert_to_numpy=True,
                     show_progress_bar=False
