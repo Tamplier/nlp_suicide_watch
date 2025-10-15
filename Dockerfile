@@ -33,9 +33,9 @@ COPY --from=builder /opt/venv /opt/venv
 
 RUN python -m spacy download en_core_web_sm
 
-COPY entrypoint.sh .
-RUN chmod +x entrypoint.sh
-
+COPY entrypoint.sh /entrypoint.sh
 COPY . .
 
-ENTRYPOINT ["./entrypoint.sh"]
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
