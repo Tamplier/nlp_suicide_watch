@@ -33,8 +33,9 @@ COPY --from=builder /opt/venv /opt/venv
 
 RUN python -m spacy download en_core_web_sm
 
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
 COPY . .
 
-RUN if [ "$APP_ENV" = "prod" ]; then \
-      CMD ['invoke', 'start-telegram-bot'] \
-    fi
+ENTRYPOINT ["./entrypoint.sh"]
