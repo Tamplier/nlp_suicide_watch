@@ -19,3 +19,7 @@ def retrain_model(c, skip_preprocessing=False, sample_n=None, opt_trials=30):
 @task
 def cli(c):
     c.run('python -m apps.cli.__main__')
+
+@task
+def start_telegram_bot(c):
+    c.run('python -m apps.telegram.bot')

@@ -11,6 +11,7 @@ emot>=3.1
 iterative-stratification>=0.1.9
 sentence_transformers>=5.1
 langchain>=0.3
-xgboost>=2.0.3
+xgboost==2.0.3
 optuna>=4.5
 invoke>=2.2
+pyTelegramBotAPI>=4.23.0

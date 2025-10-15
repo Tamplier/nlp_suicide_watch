@@ -1,0 +1,43 @@
+name: Docker Build
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        description: "Build environment (test, prod)"
+        required: true
+        type: string
+      lfs:
+        description: "Checkout with LFS (true/false)"
+        required: true
+        type: boolean
+
+env:
+  IMAGE_NAME: nlp_suicide_watch
+  REGISTRY: ghcr.io/${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: ${{ inputs.lfs }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build test image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: nlp_suicide_watch:${{ inputs.env }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            ENV=${{ inputs.env }}
+            TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}

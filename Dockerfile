@@ -1,5 +1,9 @@
 FROM python:3.12-slim as builder
 
+ARG ENV=test
+ARG TELEGRAM_TOKEN=""
+ENV APP_ENV=$ENV
+ENV TELEGRAM_TOKEN=$TELEGRAM_TOKEN
 ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y python3-dev libhunspell-dev hunspell-en-us g++
@@ -30,3 +34,7 @@ COPY --from=builder /opt/venv /opt/venv
 RUN python -m spacy download en_core_web_sm
 
 COPY . .
+
+RUN if [ "$APP_ENV" = "prod" ]; then \
+      CMD ['invoke', 'start-telegram-bot'] \
+    fi

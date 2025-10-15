@@ -3,27 +3,16 @@ name: Run Tests
 on: [push, pull_request]
 
 jobs:
-  test:
+  build:
+    uses: ./.github/workflows/docker-build.yml
+    with:
+      env: test
+      lfs: false
+    secrets: inherit
+
+  run-tests:
+    needs: build
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        lfs: false
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Build test image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: false
-        load: true
-        tags: nlp_suicide_watch:test
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-
     - name: Run tests
       run: docker run nlp_suicide_watch:test pytest
