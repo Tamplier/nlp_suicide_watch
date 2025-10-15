@@ -41,3 +41,11 @@ jobs:
           build-args: |
             ENV=${{ inputs.env }}
             TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+
+      - name: Save image as artifact
+        run: docker save nlp_suicide_watch:${{ inputs.env }} -o ${{ inputs.env }}_container.tar
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: ${{ inputs.env }}_container.tar
