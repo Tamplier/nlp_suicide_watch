@@ -1,6 +1,6 @@
 FROM python:3.12-slim as builder
 
-ARG ENV=test
+ARG ENV=prod
 ARG TELEGRAM_TOKEN=""
 ARG CLIENT=gradio
 ENV APP_ENV=$ENV
