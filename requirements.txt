@@ -1,3 +1,4 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
 numpy==1.26.4
 pandas>=2.2.3
 scikit-learn==1.2.2
@@ -15,3 +16,5 @@ xgboost==2.0.3
 optuna>=4.5
 invoke>=2.2
 pyTelegramBotAPI>=4.23.0
+torch==2.8.0+cpu
+gradio>=5.49

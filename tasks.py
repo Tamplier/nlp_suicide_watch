@@ -21,5 +21,9 @@ def cli(c):
     c.run('python -m apps.cli.__main__')
 
 @task
+def gradio(c):
+    c.run('python -m apps.gradio.app')
+
+@task
 def start_telegram_bot(c):
     c.run('python -m apps.telegram.bot')
