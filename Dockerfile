@@ -5,6 +5,7 @@ ARG TELEGRAM_TOKEN=""
 ARG CLIENT=gradio
 ENV APP_ENV=$ENV
 ENV TELEGRAM_TOKEN=$TELEGRAM_TOKEN
+ENV CLIENT=$CLIENT
 ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y python3-dev libhunspell-dev hunspell-en-us g++ && \
