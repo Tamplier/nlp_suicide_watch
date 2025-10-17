@@ -51,8 +51,17 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
           git clone https://huggingface.co/spaces/Tapocheck77/nlp_suicide_watch space
-          rsync -av --delete . space/
+          rsync -av --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='space' \
+            ./ space/
           cd space
+          git lfs install || true
+          if [[ -z $(git status -s) ]]; then
+            echo "No changes to deploy"
+            exit 0
+          fi
           git add .
-          git commit -m "Deploy from GitHub Actions" || echo "No changes"
+          git commit -m "Deploy from GitHub Actions [$(date +'%Y-%m-%d %H:%M:%S')]"
           git push https://user:$HF_TOKEN@huggingface.co/spaces/Tapocheck77/nlp_suicide_watch main
