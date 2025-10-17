@@ -50,7 +50,7 @@ jobs:
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git clone https://huggingface.co/spaces/Tapocheck77/nlp_suicide_watch space
+          git clone https://user:$HF_TOKEN@huggingface.co/spaces/Tapocheck77/nlp_suicide_watch space
           rsync -av --delete \
             --exclude='.git' \
             --exclude='.github' \
@@ -64,4 +64,4 @@ jobs:
           fi
           git add .
           git commit -m "Deploy from GitHub Actions [$(date +'%Y-%m-%d %H:%M:%S')]"
-          git push https://user:$HF_TOKEN@huggingface.co/spaces/Tapocheck77/nlp_suicide_watch main
+          git push origin main
