@@ -22,7 +22,7 @@ def cli(c):
 
 @task
 def gradio(c):
-    c.run('python -m apps.gradio.app')
+    c.run('python -m apps.gradio')
 
 @task
 def start_telegram_bot(c):
