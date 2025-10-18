@@ -61,7 +61,7 @@ jobs:
             find . -type f -name "$pattern"
           done | sed 's|^\./||' | sort -u > /tmp/lfs_files.txt
           while IFS= read -r file; do
-            if [ ! -f "$file" ]; then
+            if [ ! -f "$file" ] || [[ "$file" == *"data"* ]]; then
               continue
             fi
             gh_oid=$(git show HEAD:"$file" | grep "oid sha256:" | cut -d':' -f2 | tr -d ' ')
