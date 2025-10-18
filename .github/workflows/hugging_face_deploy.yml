@@ -43,22 +43,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
       - name: Push to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          set -e
+
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git clone https://user:$HF_TOKEN@huggingface.co/spaces/Tapocheck77/nlp_suicide_watch space
+          GIT_LFS_SKIP_SMUDGE=1 git clone https://user:$HF_TOKEN@huggingface.co/spaces/Tapocheck77/nlp_suicide_watch space
+          cd space
+          git lfs install || true
+
+          cd ..
+          git lfs ls-files -n > /tmp/lfs_files.txt
+          while IFS= read -r file; do
+            if [ ! -f "$file" ]; then
+              continue
+            fi
+            gh_oid=$(git lfs ls-files -l | grep "$file" | awk '{print $1}' | cut -d':' -f1)
+            if [ -f "space/$file" ]; then
+              hf_oid=$(cd space && git lfs ls-files -l | grep "$file" | awk '{print $1}' | cut -d':' -f1)
+            else
+              hf_oid=""
+            fi
+            if [ "$gh_oid" != "$hf_oid" ]; then
+              git lfs pull --include="$file"
+            fi
+          done < /tmp/lfs_files.txt
           rsync -av --delete \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='data' \
             --exclude='space' \
+            --exclude='tmp' \
             ./ space/
+
           cd space
-          git lfs install || true
           if [[ -z $(git status -s) ]]; then
             echo "No changes to deploy"
             exit 0
