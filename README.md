@@ -6,7 +6,7 @@ colorTo: green
 sdk: docker
 app_port: 7860
 pinned: true
-short_description: SBERT based classifier that looking for signs of suicidal behavior.
+short_description: Text classifier that looking for signs of suicidal behavior.
 tags:
   - nlp
   - SBERT
