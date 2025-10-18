@@ -24,5 +24,7 @@ class PathHelper(PathConfig):
         class processed(PathConfig):
             x_train = 'X_train_transformed.csv'
             x_test = 'X_test_transformed.csv'
+            y_train = 'y_train.csv'
+            y_test = 'y_test.csv'
     class logs(PathConfig):
         train = 'train.log'

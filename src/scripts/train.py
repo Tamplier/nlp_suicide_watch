@@ -57,18 +57,24 @@ if not args.skip_preprocessing:
     joblib.dump(preprocessing, PathHelper.models.base_text_preprocessor)
     fix_feature_names(X_train_transformed)
     X_train_transformed.to_csv(PathHelper.data.processed.x_train)
+    y_train.to_csv(PathHelper.data.processed.y_train)
 
     X_test_transformed = preprocessing.transform(X_test)
     fix_feature_names(X_test_transformed)
     X_test_transformed.to_csv(PathHelper.data.processed.x_test)
+    y_test.to_csv(PathHelper.data.processed.y_test)
 else:
     X_train_transformed = pd.read_csv(PathHelper.data.processed.x_train)
     X_test_transformed = pd.read_csv(PathHelper.data.processed.x_test)
+    y_train = pd.read_csv(PathHelper.data.processed.y_train)['class']
+    y_test = pd.read_csv(PathHelper.data.processed.y_test)['class']
     if args.sample_n:
         train_n = math.ceil(args.sample_n * (1 - TEST_SIZE))
         test_n = math.ceil(args.sample_n * TEST_SIZE)
         X_train_transformed = X_train_transformed.sample(n=train_n)
         X_test_transformed = X_test_transformed.sample(n=test_n)
+        y_train = y_train.loc[X_train_transformed.index]
+        y_test = y_test.loc[X_test_transformed.index]
 
 X_train_vectorized = text_vecrotization.fit_transform(X_train_transformed)
 joblib.dump(text_vecrotization, PathHelper.models.vectorizer)
